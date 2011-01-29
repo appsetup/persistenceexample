@@ -7,6 +7,7 @@
 
     <persistence-unit name="simple-jpa-template" transaction-type="RESOURCE_LOCAL">
         <class>com.kumtakar.test.entity.Employee</class>
+        <class>com.kumtakar.test.entity.Department</class>
         <exclude-unlisted-classes/>
     </persistence-unit>
 

@@ -31,6 +31,11 @@ public class Employee {
     @Temporal(value = TemporalType.DATE)
     private Date joiningDate;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "department_id" ,referencedColumnName = "id")
+    private Department department;
+
+
     public Long getId() {
         return id;
     }
@@ -53,6 +58,15 @@ public class Employee {
 
     public void setJoiningDate(Date joiningDate) {
         this.joiningDate = joiningDate;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        department.getEmployees().add(this);
+        this.department = department;
     }
 
     @Override

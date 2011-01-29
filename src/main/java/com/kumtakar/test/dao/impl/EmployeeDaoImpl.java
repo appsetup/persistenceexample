@@ -1,6 +1,7 @@
 package com.kumtakar.test.dao.impl;
 
 import com.kumtakar.test.dao.EmployeeDaoIF;
+import com.kumtakar.test.entity.Department;
 import com.kumtakar.test.entity.Employee;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.transaction.annotation.Propagation;
@@ -45,7 +46,9 @@ public class EmployeeDaoImpl extends JpaDaoSupport implements EmployeeDaoIF
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateEmployee(Employee employee) {
         Employee merge = getJpaTemplate().merge(employee);
+        Department department = getJpaTemplate().merge(employee.getDepartment());
         merge.setJoiningDate(employee.getJoiningDate());
+        merge.setDepartment(department);
         merge.setName(employee.getName());
 
     }

@@ -1,6 +1,7 @@
 package com.kumtakar.test;
 
 import com.kumtakar.test.broker.EmployeeBroker;
+import com.kumtakar.test.entity.Department;
 import com.kumtakar.test.entity.Employee;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -19,18 +20,21 @@ public class EmployeeTest {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("spring-config.xml");
         EmployeeBroker employeeBroker = classPathXmlApplicationContext.getBean("employeeBroker", EmployeeBroker.class);
-//        Employee employee = new Employee();
-//        employee.setId(1l);
-//        employee.setName("Naveen");
+        Employee employee = new Employee();
+        employee.setId(1l);
+        employee.setName("Naveen");
         Calendar instance = Calendar.getInstance();
         instance.set(Calendar.DATE,23);
         instance.set(Calendar.MONTH,Calendar.OCTOBER);
-        instance.set(Calendar.YEAR,9);
-//        employee.setJoiningDate(instance.getTime());
-//        employeeBroker.updateEmployee(employee);
-        List<Employee> employeesByJoiningDate = employeeBroker.getEmployeesByJoiningDate(instance.getTime(), instance.getTime());
-        for (Employee employee : employeesByJoiningDate) {
-            System.out.println("employee = " + employee);
-        }
+        instance.set(Calendar.YEAR, 9);
+        employee.setJoiningDate(instance.getTime());
+        Department department = new Department();
+        department.setId(1l);
+        employee.setDepartment(department);
+        employeeBroker.updateEmployee(employee);
+//        List<Employee> employeesByJoiningDate = employeeBroker.getEmployeesByJoiningDate(instance.getTime(), instance.getTime());
+//        for (Employee employee : employeesByJoiningDate) {
+//            System.out.println("employee = " + employee);
+//        }
     }
 }
