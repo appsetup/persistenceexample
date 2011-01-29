@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.kumtakar.test" />
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+          <property name="entityManagerFactory" ref="entityManager"/>
+    </bean>
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value="p00ja102"/>
+    </bean>
+
+    <bean id="entityManager" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="simple-jpa-template"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true"/>
+                <property name="generateDdl" value="true"/>
+                <property name="database" value="MYSQL"/>
+            </bean>
+        </property>
+    </bean>
+
+    <tx:annotation-driven />
+
+    <bean id="employeeDao" class="com.kumtakar.test.dao.impl.EmployeeDaoImpl">
+        <property name="entityManagerFactory" ref="entityManager"/>
+    </bean>
+
+    <bean id="employeeBroker" class="com.kumtakar.test.broker.EmployeeBroker"/>
+</beans>
