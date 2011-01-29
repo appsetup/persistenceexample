@@ -2,7 +2,9 @@ package com.kumtakar.test.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,8 +23,8 @@ public class Department {
     @Column(name="department_name")
     String departmentName;
 
-    @ManyToOne(targetEntity = Employee.class)
-    List<Employee> employees;
+    @OneToMany(targetEntity = Employee.class)
+    Set<Employee> employees;
 
     public Long getId() {
         return id;
@@ -32,11 +34,15 @@ public class Department {
         this.id = id;
     }
 
-    public List<Employee> getEmployees() {
-        return employees == null ? new ArrayList<Employee>():employees;
+    public Set<Employee> getEmployees() {
+        if(employees == null)
+        {
+            employees = new LinkedHashSet<Employee>();
+        }
+        return employees;
     }
 
-    public void setEmployees(List<Employee> employees) {
+    public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
 

@@ -31,8 +31,7 @@ public class Employee {
     @Temporal(value = TemporalType.DATE)
     private Date joiningDate;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "department_id" ,referencedColumnName = "id")
+    @ManyToOne(targetEntity = Department.class)
     private Department department;
 
 
@@ -65,8 +64,8 @@ public class Employee {
     }
 
     public void setDepartment(Department department) {
-        department.getEmployees().add(this);
         this.department = department;
+        department.getEmployees().add(this);
     }
 
     @Override
